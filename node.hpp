@@ -8,9 +8,11 @@ class CNode
 private:
     T m_Data;
     std::shared_ptr<CNode> m_Next;
+    std::shared_ptr<CNode> m_Prev;
+
 public:
     //constructor
-    CNode (const T &  val = T(), std::shared_ptr<CNode> ptr = nullptr);
+    CNode (const T &  val = T(), std::shared_ptr<CNode> ptr = nullptr, std::shared_ptr<CNode> Pptr = nullptr);
     //destructor
    // ~CNode ();
 
@@ -19,11 +21,25 @@ public:
     std::shared_ptr<CNode> GetNextNode () const;
     void SetData (const T & val);
     void SetNextNode (std::shared_ptr<CNode>);
+    std::shared_ptr<CNode> Prev() const;
+    void setPrev(const std::shared_ptr<CNode> &Prev);
 };
 
 
 template <typename T>
-CNode<T>::CNode (const T & val, std::shared_ptr<CNode> ptr ) : m_Data (val), m_Next (ptr)
+std::shared_ptr<CNode<T>> CNode<T>::Prev() const
+{
+    return m_Prev;
+}
+
+template <typename T>
+void CNode<T>::setPrev(const std::shared_ptr<CNode<T>> &Prev)
+{
+    m_Prev = Prev;
+}
+
+template <typename T>
+CNode<T>::CNode (const T & val, std::shared_ptr<CNode> ptr, std::shared_ptr<CNode> Pptr ) : m_Data (val), m_Next (ptr), m_Prev (Pptr)
 {
 }
 
