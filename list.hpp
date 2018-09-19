@@ -22,6 +22,7 @@ public:
     void push_back (const T & val);
     std::shared_ptr<CNode<T>> Begin () const;
     void AddAfter (std::shared_ptr<CNode<T>>, const T & val);
+    void AddBefore (const std::shared_ptr<CNode<T>>, const T & val);
 };
 
 template <typename T>
@@ -34,7 +35,10 @@ template <typename T>
 void CList<T>::AddAfter (std::shared_ptr<CNode<T>> ptr, const T & val)
 {
     std::shared_ptr<CNode<T>> tmp (new CNode<T>(val, ptr-> GetNextNode()));
+    ptr -> GetNextNode() -> setPrev(tmp);
     ptr -> SetNextNode (tmp);
+    tmp -> setPrev(ptr);
+
     if (ptr == m_realTail) m_realTail = ptr->GetNextNode ();
 }
 
@@ -101,6 +105,7 @@ void CList<T>::Delete (std::shared_ptr<CNode<T>> pDelete)
     for ( ; pFind -> GetNextNode () != pDelete ; pFind = pFind -> GetNextNode ());
 
     pFind -> SetNextNode (pDelete -> GetNextNode ());
+    pDelete -> GetNextNode() ->setPrev(pFind);
     if (pDelete == m_realTail) m_realTail = pFind;
     pDelete -> SetNextNode (nullptr);
 
@@ -115,5 +120,16 @@ void CList<T>::push_back (const T & val)
     m_realTail = pTmp;
 }
 
+template <typename T>
+void CList<T>::AddBefore (const std::shared_ptr<CNode<T>> ptr, const T & val)
+{
+    std::shared_ptr<CNode<T>> tmp (new CNode<T>(val, ptr -> GetPrev()));
+    ptr ->GetPrev() ->SetNextNode(tmp);
+    tmp ->SetNextNode(ptr);
+    ptr ->setPrev(tmp);
+
+    if(ptr == m_fictionaHead) m_fictionaHead = ptr ->GetPrev();
+
+}
 
 #endif // LIST_HPP
