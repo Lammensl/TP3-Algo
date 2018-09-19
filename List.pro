@@ -9,4 +9,5 @@ QMAKE_MAC_SDK = macosx10.12
 
 HEADERS += \
     list.hpp \
-    node.hpp
+    node.hpp \
+    crdtree.hpp
