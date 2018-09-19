@@ -41,8 +41,8 @@ void ListeSimpleV2 ()
 
     // Le dernier element cree est toujours le premier de la liste
 
-    for (unsigned i = 20; i; i -= 2) AList.AddAfter (AList.Begin (), i);
-    cout << "hfejkrhg " << endl;
+    //for (unsigned i = 20; i; i -= 2) AList.AddAfter (AList.Begin (), i);
+    //cout << "hfejkrhg " << endl;
 
     for (unsigned i (0); i < 5; ) {
         AList.push_front (i++);
@@ -71,8 +71,8 @@ void ListeSimpleV2 ()
 
     //AList.Delete (AList.Find (0));
 
-    AList.push_back (6);
-    AList.push_back (7);
+    //AList.push_back (6);
+    //AList.push_back (7);
 
 
     AList.Delete (AList.Find (2));
