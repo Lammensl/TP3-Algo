@@ -9,39 +9,53 @@ class CRDTree
 {
 private:
     std::shared_ptr<CNode<T>> m_Racine;
+    void Show(const std::shared_ptr<CNode<T>> &) const;
 public:
     CRDTree(const T &  val = T());
-    std::shared_ptr<CNode<T> > GetRacine() const;
-    void setRacine(const std::shared_ptr<CNode<T> > &Racine);
-    void Show(const std::shared_ptr<CNode<T>> Racine);
+    void Show();
+    void Add(const T & val, std::shared_ptr<CNode<T>> tmp);
 };
 
-template <typename T>
-std::shared_ptr<CNode<T> > CRDTree::GetRacine() const
+
+template<typename T>
+void CRDTree<T>::Add(const T &val, std::shared_ptr<CNode<T>> tmp)
 {
-    return m_Racine;
+    if (val < tmp->GetData ()){
+        if (tmp->GetLC () == nullptr)
+            tmp->SetLC (std::shared_ptr<CNode<T>> (new CNode<T>(val)));
+        else
+            Add(val, tmp ->GetLC());
+    }
+
+    else if (val > tmp->GetData()){
+        if (tmp->GetRC() == nullptr)
+            tmp->SetRC(std::shared_ptr<CNode<T>> (new CNode<T>(val)));
+        else
+                Add(val, tmp ->GetRC());
+    }
+
+
 }
 
-void CRDTree::setRacine(const std::shared_ptr<CNode<T> > &Racine)
-{
-    m_Racine = Racine;
-}
-
-CRDTree<T>::CRDTree(const T & val) : m_Racine(new CNode<T>(val, nullptr, nullptr)){}
+template <typename T>
+CRDTree<T>::CRDTree(const T & val) : m_Racine(new CNode<T>(val)){}
 
 template <typename T>
-CRDTree<T>::Show(const std::shared_ptr<CNode<T>> Racine)
+void CRDTree<T>::Show(const std::shared_ptr<CNode<T>> & ) const
 {
     if (m_Racine->GetLC())
-        EditerArbre (m_Racine->GetGauche());
+        Show (m_Racine->GetLC());
 
-    cout << m_Racine->GetData();
+    std::cout << m_Racine->GetData();
 
-    if (Racine->GetRC())
-        EditerArbre (m_Racine->GetRC());
+    if (m_Racine->GetRC())
+        Show (m_Racine->GetRC());
 }
 
-
+template <typename T>
+void CRDTree<T>::Show(){
+    Show(m_Racine);
+}
 
 
 

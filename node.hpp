@@ -22,7 +22,7 @@ public:
     void SetData (const T & val);
     void SetRC (std::shared_ptr<CNode>);
     std::shared_ptr<CNode> GetLC() const;
-    void setLC(const std::shared_ptr<CNode> &LC);
+    void SetLC(const std::shared_ptr<CNode> &LC);
 };
 
 
@@ -33,7 +33,7 @@ std::shared_ptr<CNode<T>> CNode<T>::GetLC() const
 }
 
 template <typename T>
-void CNode<T>::setLC(const std::shared_ptr<CNode<T>> &LC)
+void CNode<T>::SetLC(const std::shared_ptr<CNode<T>> &LC)
 {
     m_LC = LC;
 }
